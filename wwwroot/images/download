@@ -1,0 +1,192 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="ChatbotWebApp.WebForm1" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <title>EPAM Chatbot</title>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Sans-Serif;
+            line-height: 1.5em;
+        }
+
+        #header {
+            background: #ccc;
+            height: 60px;
+        }
+
+        /*#header h1 {
+                margin: 0;
+                padding-top: 15px;
+            }*/
+
+        main {
+            /*padding-bottom: 10010px;
+            margin-bottom: -10000px;*/
+            float: left;
+            width: 100%;
+        }
+
+
+
+        #footer {
+            clear: left;
+            width: 100%;
+            background: #ccc;
+            text-align: left;
+            padding: 4px 0;
+            height: 50px;
+            vertical-align: middle;
+            line-height: 50px;
+        }
+
+        #wrapper {
+            /*overflow: hidden;*/
+        }
+
+        #content {
+            margin-left: 10px; /* Same as 'nav' width */
+        }
+
+        .innertube {
+            margin: 15px; /* Padding for content */
+            margin-top: 0;
+        }
+
+        .innertubeForDiv {
+            margin: 15px; /* Padding for content */
+            margin-top: 0;
+            border: 1px solid black;
+            top: 1px;
+            height: 370px;
+        }
+
+        p {
+            color: #555;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+            nav ul a {
+                color: darkgreen;
+                text-decoration: none;
+            }
+
+        .divL, .divR {
+            float: left;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+
+        .divL {
+            width: 12%;
+        }
+
+        .divR {
+            width: auto;
+        }
+    </style>
+
+</head>
+
+<body onload="ShowBotWindow()">
+    <form id="form1" runat="server">
+        <header id="header">
+            <div class="divL">
+                <img style="position: absolute; top: 10px; bottom: 10px" class='logoImage' id='companyLogo' src="Images/logo.png" alt='EPAM Systems' />
+            </div>
+            <div class="divR">
+                <h3>| Chatbot</h3>
+            </div>
+
+            <%--<div class="innertube" style="position: relative;">
+                <img style="position: absolute; top: 10px; bottom: 10px" class='logoImage' id='companyLogo' src="Images/logo.png" alt='EPAM Systems' />
+
+
+            </div>--%>
+        </header>
+
+        <div id="wrapper">
+
+            <main>
+                <div id="content">
+                    <div class="innertube">
+                        <div>
+                            <h2></h2>
+                            Please select the Bot from the list.
+                        <asp:DropDownList ID="ddlBot" runat="server" onchange="ShowBotWindow();">
+                            <asp:ListItem Text="Feedback" Value="Feedback"></asp:ListItem>
+                            <asp:ListItem Text="Onboarding and Unified Assessment" Value="Onboarding and Unified Assessment"></asp:ListItem>
+                            <asp:ListItem Text="Payroll" Value="Payroll"></asp:ListItem>
+                            <asp:ListItem Text="Policies" Value="Policies"></asp:ListItem>
+                        </asp:DropDownList>
+
+                        </div>
+                        <br />
+                        <div class="innertubeForDiv" id="botCommunication"></div>
+                    </div>
+<%--                    <div class="innertubeForDiv">
+
+                        <iframe src='https://webchat.botframework.com/embed/epamfeedbackbot-bot?s=uzU6FmQoHc4.GBTVrgjd8XEu-TvbpmZHE0bWFdaxn-UONtZ2TrdDMQY' style='width: 100%; height: 100%; border: 0px'></iframe>
+
+                    </div>--%>
+                </div>
+            </main>
+
+            <nav id="nav">
+            </nav>
+
+        </div>
+
+        <footer id="footer">
+            <div class="innertube">
+                <span class="epam-logo">
+                    <a href="https://kb.epam.com/x/gwWzAQ" target="_blank">Chatbot version: 0.0.0.0</a>
+                </span>
+            </div>
+        </footer>
+        <script type="text/javascript">
+            const FEEDBACK_FRAME = "<iframe src='https://webchat.botframework.com/embed/epamfeedbackbot-bot?s=uzU6FmQoHc4.GBTVrgjd8XEu-TvbpmZHE0bWFdaxn-UONtZ2TrdDMQY' style='width: 100%; height: 100%; border: 0px'></iframe>";
+
+            const ONBOARDING_AND_UNIFIED_ASSESSMENT_FRAME = "<iframe src='https://webchat.botframework.com/embed/epamfeedbackbot-bot?s=uzU6FmQoHc4.GBTVrgjd8XEu-TvbpmZHE0bWFdaxn-UONtZ2TrdDMQY' style='width: 100%; height: 100%; border: 0px'></iframe>";
+
+            const PAYROLL_FRAME = "<iframe src='https://webchat.botframework.com/embed/epamfeedbackbot-bot?s=uzU6FmQoHc4.GBTVrgjd8XEu-TvbpmZHE0bWFdaxn-UONtZ2TrdDMQY' style='width: 100%; height: 100%; border: 0px'></iframe>";
+
+            const POLICIES_FRAME = "<iframe src='https://webchat.botframework.com/embed/epamfeedbackbot-bot?s=uzU6FmQoHc4.GBTVrgjd8XEu-TvbpmZHE0bWFdaxn-UONtZ2TrdDMQY' style='width: 100%; height: 100%; border: 0px'></iframe>";
+
+
+
+            function ShowBotWindow() {
+                debugger;
+                var bot = document.getElementById('<% =ddlBot.ClientID %>').value;
+                switch (bot) {
+                    case "Feedback":
+                        debugger;
+                        document.getElementById('botCommunication').innerHTML = FEEDBACK_FRAME;
+                        break;
+                    case "Onboarding and Unified Assessment":
+                        document.getElementById('botCommunication').innerHTML = ONBOARDING_AND_UNIFIED_ASSESSMENT_FRAME;
+                        break;
+                    case "Payroll":
+                        document.getElementById('botCommunication').innerHTML = PAYROLL_FRAME;
+                        break;
+                    case "Policies":
+                        document.getElementById('botCommunication').innerHTML = POLICIES_FRAME;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+        </script>
+    </form>
+</body>
+</html>
